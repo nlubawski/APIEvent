@@ -21,5 +21,16 @@ namespace APIEvent.Controllers
         {
             return _cityEventService.GetEvent();
         }
+
+        [HttpPost]
+        public ActionResult<CityEvent> PostEvent(CityEvent cityEvent)
+        {
+            if(!_cityEventService.PostEvent(cityEvent))
+            {
+                return BadRequest();
+            }
+            return Ok(cityEvent);
+
+        }
     }
 }

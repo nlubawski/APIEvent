@@ -24,5 +24,17 @@ namespace APIEvent.Core.Service
 
             return conn.Query<CityEvent>(query).ToList();
         }
+
+        public bool PostEvent(CityEvent cityEvent)
+        {
+            //to fiz values 
+            var query = "INSERT INTO cityEvent VALUES (@Title, @Description, @DateHourEvent, @Local, @Address, @Price)";
+
+            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+            var parameters = new DynamicParameters(cityEvent);
+
+            return conn.Execute(query, parameters) == 1;
+        }
     }
 }

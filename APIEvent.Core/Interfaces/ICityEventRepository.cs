@@ -6,5 +6,8 @@ namespace APIEvent.Core.Interfaces
     public interface ICityEventRepository
     {
         ActionResult<List<CityEvent>> GetEvent();
+
+        public bool PostEvent(CityEvent cityEvent);
+
     }
 }
