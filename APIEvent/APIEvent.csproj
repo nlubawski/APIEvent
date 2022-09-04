@@ -11,11 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\APIEvent.Core\APIEvent.Core.csproj" />
+    <ProjectReference Include="..\APIEvent.Infra.Data\APIEvent.Infra.Data.csproj" />
   </ItemGroup>
 
 </Project>
