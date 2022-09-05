@@ -6,7 +6,7 @@ namespace APIEvent.Core.Service
 {
     public class CityEventService : ICityEventService
     {
-        //aqui preciso acessar a interface do banco 
+
         private readonly ICityEventRepository _cityEventRepository;
 
         public CityEventService(ICityEventRepository cityEventRepository)

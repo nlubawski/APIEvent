@@ -6,5 +6,8 @@ namespace APIEvent.Core.Interfaces
     public interface IEventReservationRepository
     {
         ActionResult<List<EventReservation>> GetReservation();
+
+        bool PostReservation(long idEvent, EventReservation eventReservation);
+
     }
 }

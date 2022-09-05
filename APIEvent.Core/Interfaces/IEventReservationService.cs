@@ -5,7 +5,10 @@ namespace APIEvent.Core.Interfaces
 {
     public interface IEventReservationService
     {
-        public ActionResult<List<EventReservation>> GetReservation();
+        ActionResult<List<EventReservation>> GetReservation();
+        bool PostReservation(long idEvent, EventReservation eventReservation);
+
+
 
     }
 }

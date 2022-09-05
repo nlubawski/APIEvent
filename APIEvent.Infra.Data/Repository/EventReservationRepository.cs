@@ -24,5 +24,17 @@ namespace APIEvent.Infra.Data.Repository
 
             return conn.Query<EventReservation>(query).ToList();
         }
+
+        public bool PostReservation(long idEvent, EventReservation eventReservation)
+        {
+            var query = "INSERT INTO eventReservation VALUES (@PersonName, @Quantity, @IdEvent)";
+
+            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+            var parameters = new DynamicParameters(eventReservation);
+            //eventReservation.IdEvent = idEvent;
+
+            return conn.Execute(query, parameters) == 1;
+        }
     }
 }

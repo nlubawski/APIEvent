@@ -17,5 +17,11 @@ namespace APIEvent.Core.Service
         {
             return _eventReservationRepository.GetReservation();
         }
+
+        public bool PostReservation(long idEvent, EventReservation eventReservation)
+        {
+            return _eventReservationRepository.PostReservation(idEvent, eventReservation);
+        }
+
     }
 }

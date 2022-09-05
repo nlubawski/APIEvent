@@ -1,5 +1,6 @@
 using APIEvent.Core.Interfaces;
 using APIEvent.Core.Service;
+using APIEvent.Infra.Data.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ICityEventService, CityEventService>();
 builder.Services.AddScoped<ICityEventRepository, CityEventRepository>();
+
+builder.Services.AddScoped<IEventReservationService, EventReservationService>();
+builder.Services.AddScoped<IEventReservationRepository, EventReservationRepository>();
 
 var app = builder.Build();
 
