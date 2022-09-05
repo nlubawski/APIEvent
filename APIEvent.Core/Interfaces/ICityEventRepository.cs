@@ -9,5 +9,8 @@ namespace APIEvent.Core.Interfaces
 
         public bool PostEvent(CityEvent cityEvent);
 
+        bool UpdateEvent(long id, CityEvent cityEvent);
+
+
     }
 }

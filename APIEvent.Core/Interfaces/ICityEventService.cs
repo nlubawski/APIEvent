@@ -6,10 +6,7 @@ namespace APIEvent.Core.Interfaces
     public interface ICityEventService
     {
         ActionResult<List<CityEvent>> GetEvent();
-
         bool PostEvent(CityEvent cityEvent);
-
+        public bool UpdateEvent(long id, CityEvent cityEvent);
     }
-
-
 }

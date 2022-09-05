@@ -36,5 +36,19 @@ namespace APIEvent.Controllers
             }
             return CreatedAtAction(nameof(Created),cityEvent);
         }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult UpdateEvent(long id, CityEvent cityEvent)
+        {
+            if(!_cityEventService.UpdateEvent(id, cityEvent))
+            {
+                return NotFound();
+            }
+            return NoContent();
+        }
+
+
     }
 }

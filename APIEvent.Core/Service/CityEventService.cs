@@ -24,5 +24,9 @@ namespace APIEvent.Core.Service
             return _cityEventRepository.PostEvent(cityEvent);
         }
 
+        public bool UpdateEvent(long id, CityEvent cityEvent)
+        {
+            return _cityEventRepository.UpdateEvent(id, cityEvent);
+        }
     }
 }

@@ -36,5 +36,20 @@ namespace APIEvent.Core.Service
 
             return conn.Execute(query, parameters) == 1;
         }
+
+        public bool UpdateEvent(long id, CityEvent cityEvent)
+        {
+            var query = "Update cityEvent SET Title = @Title, Description = @Description," +
+                " DateHourEvent = @DateHourEvent, Local = @Local, Address = @Address, " +
+                "Price = @Price WHERE IdEvent = @IdEvent";
+
+            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+            var parameters = new DynamicParameters(cityEvent);
+            cityEvent.IdEvent = id;
+
+            return conn.Execute(query, parameters) == 1;
+        }
+
     }
 }
