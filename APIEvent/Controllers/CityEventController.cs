@@ -7,6 +7,8 @@ namespace APIEvent.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Consumes("application/json")]
+    [Produces("application/json")]
     public class CityEventController : ControllerBase
     {
         private readonly ICityEventService _cityEventService;
@@ -17,20 +19,22 @@ namespace APIEvent.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<List<CityEvent>> GetEvent()
         {
             return _cityEventService.GetEvent();
         }
 
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<CityEvent> PostEvent(CityEvent cityEvent)
         {
             if(!_cityEventService.PostEvent(cityEvent))
             {
                 return BadRequest();
             }
-            return Ok(cityEvent);
-
+            return CreatedAtAction(nameof(Created),cityEvent);
         }
     }
 }

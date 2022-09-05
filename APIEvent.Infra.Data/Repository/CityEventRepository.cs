@@ -27,7 +27,7 @@ namespace APIEvent.Core.Service
 
         public bool PostEvent(CityEvent cityEvent)
         {
-            //to fiz values 
+ 
             var query = "INSERT INTO cityEvent VALUES (@Title, @Description, @DateHourEvent, @Local, @Address, @Price)";
 
             using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
