@@ -15,7 +15,6 @@ namespace APIEvent.Core.Service
         {
             _configuration = configuration;
         }
-
         public ActionResult<List<CityEvent>> GetEvent()
         {
             var query = "SELECT * FROM cityEvent";
@@ -24,10 +23,8 @@ namespace APIEvent.Core.Service
 
             return conn.Query<CityEvent>(query).ToList();
         }
-
         public bool PostEvent(CityEvent cityEvent)
         {
- 
             var query = "INSERT INTO cityEvent VALUES (@Title, @Description, @DateHourEvent, @Local, @Address, @Price)";
 
             using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
@@ -36,7 +33,6 @@ namespace APIEvent.Core.Service
 
             return conn.Execute(query, parameters) == 1;
         }
-
         public bool UpdateEvent(long id, CityEvent cityEvent)
         {
             var query = "Update cityEvent SET Title = @Title, Description = @Description," +
@@ -47,6 +43,16 @@ namespace APIEvent.Core.Service
 
             var parameters = new DynamicParameters(cityEvent);
             cityEvent.IdEvent = id;
+
+            return conn.Execute(query, parameters) == 1;
+        }
+        public bool DeleteEvent(long id)
+        {
+            var query = "DELETE FROM cityEvent WHERE IdEvent=@id";
+            var parameters = new DynamicParameters();
+            parameters.Add("id", id);
+
+            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
             return conn.Execute(query, parameters) == 1;
         }

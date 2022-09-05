@@ -8,5 +8,7 @@ namespace APIEvent.Core.Interfaces
         ActionResult<List<CityEvent>> GetEvent();
         bool PostEvent(CityEvent cityEvent);
         public bool UpdateEvent(long id, CityEvent cityEvent);
+
+        public bool DeleteEvent(long id);
     }
 }

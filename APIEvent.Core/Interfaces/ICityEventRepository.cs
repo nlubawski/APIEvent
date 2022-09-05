@@ -11,6 +11,9 @@ namespace APIEvent.Core.Interfaces
 
         bool UpdateEvent(long id, CityEvent cityEvent);
 
+        bool DeleteEvent(long id);
+
+
 
     }
 }

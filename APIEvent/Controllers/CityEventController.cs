@@ -49,6 +49,16 @@ namespace APIEvent.Controllers
             return NoContent();
         }
 
-
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult DeleteEvent(long id)
+        {
+            if (!_cityEventService.DeleteEvent(id))
+            {
+                return NotFound();
+            }
+            return NoContent();
+        }
     }
 }
