@@ -91,14 +91,32 @@ namespace APIEvent.Core.Service
         }
         public bool DeleteEvent(long id)
         {
-            var query = "DELETE FROM cityEvent WHERE IdEvent=@id";
-            var parameters = new DynamicParameters();
-            parameters.Add("id", id);
-
+            var query = "Update cityEvent SET Status = 0 WHERE IdEvent = @IdEvent";
+            if (!CheckReservation(id))
+            {
+                query = "DELETE FROM cityEvent WHERE IdEvent = @IdEvent";
+            }
             using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@IdEvent", id);
 
             return conn.Execute(query, parameters) == 1;
         }
+
+        public bool CheckReservation(long IdEvent)
+        {
+            var query = "SELECT * FROM eventReservation WHERE IdEvent = @id";
+
+            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@id", IdEvent);
+
+            return conn.Execute(query, parameters) >= 1;
+        }
+
+
 
 
     }

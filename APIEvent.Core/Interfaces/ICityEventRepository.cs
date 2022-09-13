@@ -15,6 +15,8 @@ namespace APIEvent.Core.Interfaces
 
         public bool PostEvent(CityEvent cityEvent);
 
+        public bool CheckReservation(long IdEvent);
+
         bool UpdateEvent(long id, CityEvent cityEvent);
 
         bool DeleteEvent(long id);

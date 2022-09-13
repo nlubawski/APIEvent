@@ -69,7 +69,5 @@ namespace APIEvent.Infra.Data.Repository
 
             return conn.Execute(query, parameters) >= 1;
         }
-
-
     }
 }
