@@ -68,7 +68,7 @@ namespace APIEvent.Core.Service
 
         public bool PostEvent(CityEvent cityEvent)
         {
-            var query = "INSERT INTO cityEvent VALUES (@Title, @Description, @DateHourEvent, @Local, @Address, @Price)";
+            var query = "INSERT INTO cityEvent VALUES (@Title, @Description, @DateHourEvent, @Local, @Address, @Price, @Status)";
 
             using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
@@ -76,11 +76,12 @@ namespace APIEvent.Core.Service
 
             return conn.Execute(query, parameters) == 1;
         }
+
         public bool UpdateEvent(long id, CityEvent cityEvent)
         {
             var query = "Update cityEvent SET Title = @Title, Description = @Description," +
                 " DateHourEvent = @DateHourEvent, Local = @Local, Address = @Address, " +
-                "Price = @Price WHERE IdEvent = @IdEvent";
+                "Price = @Price, Status = @Status WHERE IdEvent = @IdEvent";
 
             using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
@@ -115,9 +116,5 @@ namespace APIEvent.Core.Service
 
             return conn.Execute(query, parameters) >= 1;
         }
-
-
-
-
     }
 }

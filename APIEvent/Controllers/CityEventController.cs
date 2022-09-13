@@ -46,7 +46,7 @@ namespace APIEvent.Controllers
             return _cityEventService.GetEventByDateAndRange(date, initialPrice, finalPrice);
         }
 
-        [HttpPost]
+        [HttpPost("/events")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<CityEvent> PostEvent(CityEvent cityEvent)
@@ -55,10 +55,12 @@ namespace APIEvent.Controllers
             {
                 return BadRequest();
             }
-            return CreatedAtAction(nameof(Created),cityEvent);
+            //return CreatedAtAction(nameof(Created),cityEvent);
+            return Ok(cityEvent);
+
         }
 
-        [HttpPut]
+        [HttpPut("/events")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult UpdateEvent(long id, CityEvent cityEvent)
@@ -70,7 +72,7 @@ namespace APIEvent.Controllers
             return NoContent();
         }
 
-        [HttpDelete]
+        [HttpDelete("/events")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
