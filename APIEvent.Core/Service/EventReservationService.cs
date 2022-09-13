@@ -23,5 +23,11 @@ namespace APIEvent.Core.Service
         {
             return _eventReservationRepository.PostReservation(idEvent, eventReservation);
         }
+
+
+        public bool DeleteReservation(long IdReservation)
+        {
+            return _eventReservationRepository.DeleteReservation(IdReservation);
+        }
     }
 }

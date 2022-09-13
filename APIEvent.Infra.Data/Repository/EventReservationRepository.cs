@@ -44,5 +44,17 @@ namespace APIEvent.Infra.Data.Repository
 
             return conn.Execute(query, parameters) == 1;
         }
+
+        public bool DeleteReservation(long IdReservation)
+        {
+            var query = "DELETE FROM eventReservation WHERE IdReservation = @id";
+
+            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@id", IdReservation);
+
+            return conn.Execute(query, parameters) >= 1;
+        }
     }
 }

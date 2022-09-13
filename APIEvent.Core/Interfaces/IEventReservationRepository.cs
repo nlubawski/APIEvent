@@ -10,5 +10,7 @@ namespace APIEvent.Core.Interfaces
 
         bool PostReservation(long idEvent, EventReservation eventReservation);
 
+        bool DeleteReservation(long IdReservation);
+
     }
 }

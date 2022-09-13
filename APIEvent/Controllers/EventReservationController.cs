@@ -41,6 +41,19 @@ namespace APIEvent.Controllers
             return Ok(eventReservation);
         }
 
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public IActionResult DeleteReservation(long IdReservation)
+        {
+            if (!_eventReservationService.DeleteReservation(IdReservation))
+            {
+                return NotFound();
+            }
+            return NoContent();
+        }
+
 
 
     }
