@@ -35,6 +35,21 @@ namespace APIEvent.Core.Service
             parameters.Add("@title", $"%{title}%");
 
             return conn.Query<CityEvent>(query, parameters).ToList();
+
+
+        }
+
+        public ActionResult<List<CityEvent>> GetEventByLocalAndDate(string local, string date)
+        {
+            var query = "SELECT * FROM cityEvent WHERE Local=@local AND DateHourEvent=@date";
+
+            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@local", local);
+            parameters.Add("@date", date);
+
+            return conn.Query<CityEvent>(query, parameters).ToList();
         }
 
         public bool PostEvent(CityEvent cityEvent)
@@ -70,6 +85,7 @@ namespace APIEvent.Core.Service
 
             return conn.Execute(query, parameters) == 1;
         }
+
 
     }
 }

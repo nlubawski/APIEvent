@@ -9,6 +9,8 @@ namespace APIEvent.Core.Interfaces
 
         ActionResult<List<CityEvent>> GetEventByTitle(string title);
 
+        ActionResult<List<CityEvent>> GetEventByLocalAndDate(string local, string date);
+
         public bool PostEvent(CityEvent cityEvent);
 
         bool UpdateEvent(long id, CityEvent cityEvent);

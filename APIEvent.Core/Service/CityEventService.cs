@@ -22,6 +22,12 @@ namespace APIEvent.Core.Service
         {
             return _cityEventRepository.GetEventByTitle(title);
         }
+
+        public ActionResult<List<CityEvent>> GetEventByLocalAndDate(string local, string date)
+        {
+            return _cityEventRepository.GetEventByLocalAndDate(local, date);
+        }
+
         public bool PostEvent(CityEvent cityEvent)
         {
             return _cityEventRepository.PostEvent(cityEvent);
@@ -34,5 +40,7 @@ namespace APIEvent.Core.Service
         {
             return _cityEventRepository.DeleteEvent(id);
         }
+
+
     }
 }

@@ -25,17 +25,19 @@ namespace APIEvent.Controllers
             return _cityEventService.GetEvent();
         }
 
-        [HttpGet("/events{title}")]
+        [HttpGet("/events/{title}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public ActionResult<List<CityEvent>> GetEventByTitle(string title)
         {
             return _cityEventService.GetEventByTitle(title);
         }
 
-        //TO FEATIX - pegar evento por local e data
-
-
-        //TO FEATIX - pegar por range de preço e data
+        [HttpGet("/events/{local}/{date}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<List<CityEvent>> GetEventByLocalAndDate(string local, string date)
+        {
+            return _cityEventService.GetEventByLocalAndDate(local, date);
+        }
 
 
 
