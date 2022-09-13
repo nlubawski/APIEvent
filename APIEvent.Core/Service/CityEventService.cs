@@ -17,6 +17,11 @@ namespace APIEvent.Core.Service
         {
             return _cityEventRepository.GetEvent();
         }
+
+        public ActionResult<List<CityEvent>> GetEventByTitle(string title)
+        {
+            return _cityEventRepository.GetEventByTitle(title);
+        }
         public bool PostEvent(CityEvent cityEvent)
         {
             return _cityEventRepository.PostEvent(cityEvent);

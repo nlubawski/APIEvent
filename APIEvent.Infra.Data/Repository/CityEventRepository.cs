@@ -23,6 +23,20 @@ namespace APIEvent.Core.Service
 
             return conn.Query<CityEvent>(query).ToList();
         }
+
+        public ActionResult<List<CityEvent>> GetEventByTitle(string title)
+        { 
+            
+            var query = "SELECT * FROM cityEvent WHERE Title LIKE @Title";
+
+            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@title", $"%{title}%");
+
+            return conn.Query<CityEvent>(query, parameters).ToList();
+        }
+
         public bool PostEvent(CityEvent cityEvent)
         {
             var query = "INSERT INTO cityEvent VALUES (@Title, @Description, @DateHourEvent, @Local, @Address, @Price)";
