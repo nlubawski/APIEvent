@@ -11,6 +11,8 @@ namespace APIEvent.Core.Interfaces
 
         ActionResult<List<CityEvent>> GetEventByLocalAndDate(string local, string date);
 
+        ActionResult<List<CityEvent>> GetEventByDateAndRange(string date, string initialPrice, string finalPrice);
+
         public bool PostEvent(CityEvent cityEvent);
 
         bool UpdateEvent(long id, CityEvent cityEvent);

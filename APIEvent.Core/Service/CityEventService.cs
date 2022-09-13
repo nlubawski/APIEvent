@@ -28,6 +28,11 @@ namespace APIEvent.Core.Service
             return _cityEventRepository.GetEventByLocalAndDate(local, date);
         }
 
+        public ActionResult<List<CityEvent>> GetEventByDateAndRange(string date, string initialPrice, string finalPrice)
+        {
+            return _cityEventRepository.GetEventByDateAndRange(date, initialPrice, finalPrice);
+        }
+
         public bool PostEvent(CityEvent cityEvent)
         {
             return _cityEventRepository.PostEvent(cityEvent);
@@ -40,7 +45,6 @@ namespace APIEvent.Core.Service
         {
             return _cityEventRepository.DeleteEvent(id);
         }
-
 
     }
 }

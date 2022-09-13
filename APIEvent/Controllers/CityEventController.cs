@@ -39,7 +39,12 @@ namespace APIEvent.Controllers
             return _cityEventService.GetEventByLocalAndDate(local, date);
         }
 
-
+        [HttpGet("/events/{date}/{initialPrice}/{finalPrice}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<List<CityEvent>> GetEventByDateAndRange(string date, string initialPrice, string finalPrice)
+        {
+            return _cityEventService.GetEventByDateAndRange(date, initialPrice, finalPrice);
+        }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]

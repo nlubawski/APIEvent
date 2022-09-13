@@ -52,6 +52,20 @@ namespace APIEvent.Core.Service
             return conn.Query<CityEvent>(query, parameters).ToList();
         }
 
+        public ActionResult<List<CityEvent>> GetEventByDateAndRange(string date, string initialPrice, string finalPrice)
+        {
+            var query = "SELECT * FROM cityEvent WHERE Price>=@initialPrice AND Price <= @finalPrice AND DateHourEvent=@date";
+
+            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@initialPrice", initialPrice);
+            parameters.Add("@finalPrice", finalPrice);
+            parameters.Add("@date", date);
+
+            return conn.Query<CityEvent>(query, parameters).ToList();
+        }
+
         public bool PostEvent(CityEvent cityEvent)
         {
             var query = "INSERT INTO cityEvent VALUES (@Title, @Description, @DateHourEvent, @Local, @Address, @Price)";
