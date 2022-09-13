@@ -11,6 +11,7 @@ namespace APIEvent.Controllers
     [ApiController]
     [Consumes("application/json")]
     [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
     public class EventReservationController : ControllerBase
     {
         readonly IEventReservationService _eventReservationService;

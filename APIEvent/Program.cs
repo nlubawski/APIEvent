@@ -1,8 +1,13 @@
 using APIEvent.Core.Interfaces;
 using APIEvent.Core.Service;
+using APIEvent.Filters;
 using APIEvent.Infra.Data.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddMvc(options =>
+    options.Filters.Add<GeneralExceptionFilter>()
+    );
 
 // Add services to the container.
 

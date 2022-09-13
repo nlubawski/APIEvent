@@ -9,6 +9,7 @@ namespace APIEvent.Controllers
     [ApiController]
     [Consumes("application/json")]
     [Produces("application/json")]
+    [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
     public class CityEventController : ControllerBase
     {
         private readonly ICityEventService _cityEventService;
@@ -47,7 +48,8 @@ namespace APIEvent.Controllers
         }
 
         [HttpPost("/events")]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        //[ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<CityEvent> PostEvent(CityEvent cityEvent)
         {
@@ -76,8 +78,6 @@ namespace APIEvent.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        //TO FIX
-        //Se não possuir reservar ok, se tiver tem que por como inativo
         public IActionResult DeleteEvent(long id)
         {
             if (!_cityEventService.DeleteEvent(id))
