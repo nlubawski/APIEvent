@@ -1,5 +1,6 @@
 ﻿using APIEvent.Core.Interfaces;
 using APIEvent.Core.Model;
+using APIEvent.Core.Model.DTO;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -16,13 +17,20 @@ namespace APIEvent.Infra.Data.Repository
             _configuration = configuration;
         }
 
-        public ActionResult<List<EventReservation>> GetReservation()
+        public ActionResult<List<ReservationDTO>> GetReservation(string personName, string title)
         {
-            var query = "SELECT * FROM eventReservation";
+
+            var query = "SELECT * FROM cityEvent AS c JOIN eventReservation AS e " +
+                "ON c.IdEvent = e.IdEvent WHERE c.Title Like @title AND e.PersonName = @personName";
+
 
             using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-            return conn.Query<EventReservation>(query).ToList();
+            var parameters = new DynamicParameters();
+            parameters.Add("@title", $"%{title}%");
+            parameters.Add("@personName", personName);
+
+            return conn.Query<ReservationDTO>(query, parameters).ToList();
         }
 
         public bool PostReservation(long idEvent, EventReservation eventReservation)

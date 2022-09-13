@@ -1,5 +1,6 @@
 ﻿using APIEvent.Core.Interfaces;
 using APIEvent.Core.Model;
+using APIEvent.Core.Model.DTO;
 using APIEvent.Core.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,11 +20,11 @@ namespace APIEvent.Controllers
             _eventReservationService = eventReservation;
         }
 
-        [HttpGet]
+        [HttpGet("/reservations/{title}/{personName}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<List<EventReservation>>  GetReservation()
+        public ActionResult<List<ReservationDTO>>  GetReservation(string personName, string title)
         {
-            return _eventReservationService.GetReservation();
+            return _eventReservationService.GetReservation(personName, title);
         }
 
         [HttpPost]
@@ -39,5 +40,8 @@ namespace APIEvent.Controllers
             //return CreatedAtAction(nameof(Created), eventReservation);
             return Ok(eventReservation);
         }
+
+
+
     }
 }

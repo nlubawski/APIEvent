@@ -1,5 +1,6 @@
 ﻿using APIEvent.Core.Interfaces;
 using APIEvent.Core.Model;
+using APIEvent.Core.Model.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIEvent.Core.Service
@@ -13,15 +14,14 @@ namespace APIEvent.Core.Service
             _eventReservationRepository = eventReservationRepository;
         }
 
-        public ActionResult<List<EventReservation>> GetReservation()
+        public ActionResult<List<ReservationDTO>> GetReservation(string personName, string title)
         {
-            return _eventReservationRepository.GetReservation();
+            return _eventReservationRepository.GetReservation(personName, title);
         }
 
         public bool PostReservation(long idEvent, EventReservation eventReservation)
         {
             return _eventReservationRepository.PostReservation(idEvent, eventReservation);
         }
-
     }
 }

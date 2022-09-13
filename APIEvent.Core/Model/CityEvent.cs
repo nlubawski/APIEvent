@@ -2,17 +2,6 @@
 {
     public class CityEvent
     {
-        //Porque deu problema pra fazer o get quando usei o construtor?
-        //public CityEvent(string title, string local, DateTime dateHourEvent, string? description = null, string? address = null, decimal? preco = null)
-        //{
-        //    Title = title;
-        //    Local = local;
-        //    DateHourEvent = dateHourEvent;
-        //    Description = description;           
-        //    Address = address;
-        //    Preco = preco;
-        //}
-
         public long IdEvent {get; set;}
 
         public string Title {get; set;} 
