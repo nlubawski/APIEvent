@@ -24,10 +24,15 @@ namespace APIEvent.Core.Service
             return _eventReservationRepository.PostReservation(idEvent, eventReservation);
         }
 
+        public bool UpdateQuantityReservation(long IdReservation, long quantity)
+        {
+            return _eventReservationRepository.UpdateQuantityReservation(IdReservation, quantity);
+        }
 
         public bool DeleteReservation(long IdReservation)
         {
             return _eventReservationRepository.DeleteReservation(IdReservation);
         }
+
     }
 }

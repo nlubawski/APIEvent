@@ -11,6 +11,9 @@ namespace APIEvent.Core.Interfaces
 
         bool DeleteReservation(long IdReservation);
 
+        bool UpdateQuantityReservation(long IdReservation, long quantity);
+
+
 
 
     }

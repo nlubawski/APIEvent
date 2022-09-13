@@ -45,6 +45,19 @@ namespace APIEvent.Infra.Data.Repository
             return conn.Execute(query, parameters) == 1;
         }
 
+        public bool UpdateQuantityReservation(long idReservation, long quantity)
+        {
+            var query = "UPDATE eventReservation SET Quantity = @quantity WHERE IdReservation = @idReservation";
+
+            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@idReservation", idReservation);
+            parameters.Add("@quantity", quantity);
+
+            return conn.Execute(query, parameters) == 1;
+        }
+
         public bool DeleteReservation(long IdReservation)
         {
             var query = "DELETE FROM eventReservation WHERE IdReservation = @id";
@@ -56,5 +69,7 @@ namespace APIEvent.Infra.Data.Repository
 
             return conn.Execute(query, parameters) >= 1;
         }
+
+
     }
 }

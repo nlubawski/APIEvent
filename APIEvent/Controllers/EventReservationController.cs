@@ -41,20 +41,29 @@ namespace APIEvent.Controllers
             return Ok(eventReservation);
         }
 
+        [HttpPatch("/reservations/{idReservation}/{quantity}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<CityEvent> UpdateQuantityReservation(long idReservation, long quantity)
+        {
+            if (!_eventReservationService.UpdateQuantityReservation(idReservation, quantity))
+            {
+                return BadRequest();
+            }
+            return NoContent();
+        }
+
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public IActionResult DeleteReservation(long IdReservation)
+        public IActionResult DeleteReservation(long idReservation)
         {
-            if (!_eventReservationService.DeleteReservation(IdReservation))
+            if (!_eventReservationService.DeleteReservation(idReservation))
             {
                 return NotFound();
             }
             return NoContent();
         }
-
-
-
     }
 }
