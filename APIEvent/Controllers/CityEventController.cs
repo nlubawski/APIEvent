@@ -1,6 +1,6 @@
 ﻿using APIEvent.Core.Interfaces;
 using APIEvent.Core.Model;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIEvent.Controllers
@@ -10,6 +10,8 @@ namespace APIEvent.Controllers
     [Consumes("application/json")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+
     public class CityEventController : ControllerBase
     {
         private readonly ICityEventService _cityEventService;
@@ -21,6 +23,7 @@ namespace APIEvent.Controllers
 
         [HttpGet("/events")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize(Roles = "admin")]
         public ActionResult<List<CityEvent>> GetEvent()
         {
             return _cityEventService.GetEvent();
@@ -28,6 +31,7 @@ namespace APIEvent.Controllers
 
         [HttpGet("/events/{title}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize(Roles = "admin, cliente")]
         public ActionResult<List<CityEvent>> GetEventByTitle(string title)
         {
             return _cityEventService.GetEventByTitle(title);
@@ -35,6 +39,7 @@ namespace APIEvent.Controllers
 
         [HttpGet("/events/{local}/{date}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize(Roles = "admin, cliente")]
         public ActionResult<List<CityEvent>> GetEventByLocalAndDate(string local, string date)
         {
             return _cityEventService.GetEventByLocalAndDate(local, date);
@@ -42,6 +47,7 @@ namespace APIEvent.Controllers
 
         [HttpGet("/events/{date}/{initialPrice}/{finalPrice}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize(Roles = "admin,cliente")]
         public ActionResult<List<CityEvent>> GetEventByDateAndRange(string date, string initialPrice, string finalPrice)
         {
             return _cityEventService.GetEventByDateAndRange(date, initialPrice, finalPrice);
@@ -49,22 +55,21 @@ namespace APIEvent.Controllers
 
         [HttpPost("/events")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        //[ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Roles = "admin")]
         public ActionResult<CityEvent> PostEvent(CityEvent cityEvent)
         {
             if(!_cityEventService.PostEvent(cityEvent))
             {
                 return BadRequest();
             }
-            //return CreatedAtAction(nameof(Created),cityEvent);
             return Ok(cityEvent);
-
         }
 
         [HttpPut("/events")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize(Roles = "admin")]
         public IActionResult UpdateEvent(long id, CityEvent cityEvent)
         {
             if(!_cityEventService.UpdateEvent(id, cityEvent))
@@ -77,7 +82,7 @@ namespace APIEvent.Controllers
         [HttpDelete("/events")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteEvent(long id)
         {
             if (!_cityEventService.DeleteEvent(id))

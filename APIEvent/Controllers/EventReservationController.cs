@@ -2,8 +2,10 @@
 using APIEvent.Core.Model;
 using APIEvent.Core.Model.DTO;
 using APIEvent.Core.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace APIEvent.Controllers
 {
@@ -12,6 +14,7 @@ namespace APIEvent.Controllers
     [Consumes("application/json")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public class EventReservationController : ControllerBase
     {
         readonly IEventReservationService _eventReservationService;
@@ -23,15 +26,16 @@ namespace APIEvent.Controllers
 
         [HttpGet("/reservations/{title}/{personName}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize(Roles = "admin, cliente")]
         public ActionResult<List<ReservationDTO>>  GetReservation(string personName, string title)
         {
             return _eventReservationService.GetReservation(personName, title);
         }
 
         [HttpPost]
-        //[ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Roles = "admin, cliente")]
         public ActionResult<CityEvent> PostReservation(long idEvent, EventReservation eventReservation)
         {
             if (!_eventReservationService.PostReservation(idEvent, eventReservation))
@@ -45,6 +49,7 @@ namespace APIEvent.Controllers
         [HttpPatch("/reservations/{idReservation}/{quantity}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize(Roles = "admin")]
         public ActionResult<CityEvent> UpdateQuantityReservation(long idReservation, long quantity)
         {
             if (!_eventReservationService.UpdateQuantityReservation(idReservation, quantity))
@@ -57,7 +62,7 @@ namespace APIEvent.Controllers
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-
+        [Authorize(Roles = "admin")]
         public IActionResult DeleteReservation(long idReservation)
         {
             if (!_eventReservationService.DeleteReservation(idReservation))
