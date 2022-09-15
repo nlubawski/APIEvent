@@ -11,6 +11,7 @@ namespace APIEvent.Controllers
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
 
     public class CityEventController : ControllerBase
     {

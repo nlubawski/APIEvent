@@ -15,6 +15,7 @@ namespace APIEvent.Controllers
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public class EventReservationController : ControllerBase
     {
         readonly IEventReservationService _eventReservationService;
@@ -42,7 +43,6 @@ namespace APIEvent.Controllers
             {
                 return BadRequest();
             }
-            //return CreatedAtAction(nameof(Created), eventReservation);
             return Ok(eventReservation);
         }
 
