@@ -1,5 +1,6 @@
 ﻿using APIEvent.Core.Interfaces;
 using APIEvent.Core.Model;
+using APIEvent.Core.Model.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIEvent.Core.Service
@@ -33,7 +34,7 @@ namespace APIEvent.Core.Service
             return _cityEventRepository.GetEventByDateAndRange(date, initialPrice, finalPrice);
         }
 
-        public bool PostEvent(CityEvent cityEvent)
+        public bool PostEvent(CityEventDTO cityEvent)
         {
             return _cityEventRepository.PostEvent(cityEvent);
         }

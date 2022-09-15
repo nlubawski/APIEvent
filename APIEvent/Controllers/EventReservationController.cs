@@ -1,11 +1,8 @@
 ﻿using APIEvent.Core.Interfaces;
 using APIEvent.Core.Model;
 using APIEvent.Core.Model.DTO;
-using APIEvent.Core.Service;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 
 namespace APIEvent.Controllers
 {
@@ -37,9 +34,9 @@ namespace APIEvent.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Roles = "admin, cliente")]
-        public ActionResult<CityEvent> PostReservation(long idEvent, EventReservation eventReservation)
+        public ActionResult<CityEvent> PostReservation([FromBody] EventReservationDTO eventReservation)
         {
-            if (!_eventReservationService.PostReservation(idEvent, eventReservation))
+            if (!_eventReservationService.PostReservation(eventReservation))
             {
                 return BadRequest();
             }

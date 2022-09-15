@@ -1,5 +1,6 @@
 ﻿using APIEvent.Core.Interfaces;
 using APIEvent.Core.Model;
+using APIEvent.Core.Model.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -58,7 +59,7 @@ namespace APIEvent.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Roles = "admin")]
-        public ActionResult<CityEvent> PostEvent(CityEvent cityEvent)
+        public ActionResult<CityEvent> PostEvent([FromBody] CityEventDTO cityEvent)
         {
             if(!_cityEventService.PostEvent(cityEvent))
             {

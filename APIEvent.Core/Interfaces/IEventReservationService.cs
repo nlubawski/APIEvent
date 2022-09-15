@@ -7,7 +7,7 @@ namespace APIEvent.Core.Interfaces
     public interface IEventReservationService
     {
         ActionResult<List<ReservationDTO>> GetReservation(string personName, string title);
-        bool PostReservation(long idEvent, EventReservation eventReservation);
+        bool PostReservation(EventReservationDTO eventReservation);
 
         bool DeleteReservation(long IdReservation);
 

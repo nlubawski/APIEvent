@@ -1,4 +1,5 @@
 ﻿using APIEvent.Core.Model;
+using APIEvent.Core.Model.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIEvent.Core.Interfaces
@@ -13,7 +14,7 @@ namespace APIEvent.Core.Interfaces
 
         ActionResult<List<CityEvent>> GetEventByDateAndRange(string date, string initialPrice, string finalPrice);
 
-        public bool PostEvent(CityEvent cityEvent);
+        public bool PostEvent(CityEventDTO cityEvent);
 
         public bool CheckReservation(long IdEvent);
 

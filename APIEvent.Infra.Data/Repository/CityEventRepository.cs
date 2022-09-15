@@ -1,5 +1,6 @@
 ﻿using APIEvent.Core.Interfaces;
 using APIEvent.Core.Model;
+using APIEvent.Core.Model.DTO;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -66,7 +67,7 @@ namespace APIEvent.Core.Service
             return conn.Query<CityEvent>(query, parameters).ToList();
         }
 
-        public bool PostEvent(CityEvent cityEvent)
+        public bool PostEvent(CityEventDTO cityEvent)
         {
             var query = "INSERT INTO cityEvent VALUES (@Title, @Description, @DateHourEvent, @Local, @Address, @Price, @Status)";
 

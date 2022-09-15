@@ -1,4 +1,5 @@
 ﻿using APIEvent.Core.Model;
+using APIEvent.Core.Model.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIEvent.Core.Interfaces
@@ -12,7 +13,7 @@ namespace APIEvent.Core.Interfaces
 
         ActionResult<List<CityEvent>> GetEventByDateAndRange(string date, string initialPrice, string finalPrice);
 
-        bool PostEvent(CityEvent cityEvent);
+        bool PostEvent(CityEventDTO cityEvent);
         public bool UpdateEvent(long id, CityEvent cityEvent);
 
         public bool DeleteEvent(long id);

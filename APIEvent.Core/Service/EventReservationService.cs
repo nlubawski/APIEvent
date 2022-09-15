@@ -19,9 +19,9 @@ namespace APIEvent.Core.Service
             return _eventReservationRepository.GetReservation(personName, title);
         }
 
-        public bool PostReservation(long idEvent, EventReservation eventReservation)
+        public bool PostReservation(EventReservationDTO eventReservation)
         {
-            return _eventReservationRepository.PostReservation(idEvent, eventReservation);
+            return _eventReservationRepository.PostReservation(eventReservation);
         }
 
         public bool UpdateQuantityReservation(long IdReservation, long quantity)
