@@ -3,6 +3,7 @@ using APIEvent.Core.Model;
 using APIEvent.Core.Model.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.CompilerServices;
 
 namespace APIEvent.Controllers
 {
@@ -26,42 +27,42 @@ namespace APIEvent.Controllers
         [HttpGet("/events")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(Roles = "admin")]
-        public ActionResult<List<CityEvent>> GetEvent()
+        public async Task<ActionResult<List<CityEvent>>> GetEventAsync()
         {
-            return _cityEventService.GetEvent();
+            return await _cityEventService.GetEventAsync();
         }
 
         [HttpGet("/events/{title}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(Roles = "admin, cliente")]
-        public ActionResult<List<CityEvent>> GetEventByTitle(string title)
+        public async Task<ActionResult<List<CityEvent>>> GetEventByTitleAsync(string title)
         {
-            return _cityEventService.GetEventByTitle(title);
+            return await _cityEventService.GetEventByTitleAsync(title);
         }
 
         [HttpGet("/events/{local}/{date}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(Roles = "admin, cliente")]
-        public ActionResult<List<CityEvent>> GetEventByLocalAndDate(string local, string date)
+        public async Task<ActionResult<List<CityEvent>>> GetEventByLocalAndDateAsync(string local, string date)
         {
-            return _cityEventService.GetEventByLocalAndDate(local, date);
+            return await _cityEventService.GetEventByLocalAndDateAsync(local, date);
         }
 
         [HttpGet("/events/{date}/{initialPrice}/{finalPrice}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(Roles = "admin,cliente")]
-        public ActionResult<List<CityEvent>> GetEventByDateAndRange(string date, string initialPrice, string finalPrice)
+        public async Task<ActionResult<List<CityEvent>>> GetEventByDateAndRangeAsync(string date, string initialPrice, string finalPrice)
         {
-            return _cityEventService.GetEventByDateAndRange(date, initialPrice, finalPrice);
+            return await _cityEventService.GetEventByDateAndRangeAsync(date, initialPrice, finalPrice);
         }
 
         [HttpPost("/events")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Roles = "admin")]
-        public ActionResult<CityEvent> PostEvent([FromBody] CityEventDTO cityEvent)
+        public async Task<ActionResult<CityEvent>> PostEventAsync([FromBody] CityEventDTO cityEvent)
         {
-            if(!_cityEventService.PostEvent(cityEvent))
+            if(!( await _cityEventService.PostEventAsync(cityEvent)))
             {
                 return BadRequest();
             }
@@ -72,9 +73,9 @@ namespace APIEvent.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Authorize(Roles = "admin")]
-        public IActionResult UpdateEvent(long id, CityEvent cityEvent)
+        public async Task<IActionResult> UpdateEventAsync(long id, CityEvent cityEvent)
         {
-            if(!_cityEventService.UpdateEvent(id, cityEvent))
+            if(!(await _cityEventService.UpdateEventAsync(id, cityEvent)))
             {
                 return NotFound();
             }
@@ -85,9 +86,9 @@ namespace APIEvent.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Authorize(Roles = "admin")]
-        public IActionResult DeleteEvent(long id)
+        public async Task<IActionResult> DeleteEventAsync(long id)
         {
-            if (!_cityEventService.DeleteEvent(id))
+            if (!(await _cityEventService.DeleteEventAsync(id)))
             {
                 return NotFound();
             }

@@ -17,7 +17,7 @@ namespace APIEvent.Infra.Data.Repository
             _configuration = configuration;
         }
 
-        public ActionResult<List<ReservationDTO>> GetReservation(string personName, string title)
+        public async Task<ActionResult<List<ReservationDTO>>> GetReservationAsync(string personName, string title)
         {
 
             var query = "SELECT * FROM cityEvent AS c JOIN eventReservation AS e " +
@@ -30,10 +30,10 @@ namespace APIEvent.Infra.Data.Repository
             parameters.Add("@title", $"%{title}%");
             parameters.Add("@personName", personName);
 
-            return conn.Query<ReservationDTO>(query, parameters).ToList();
+            return (await conn.QueryAsync<ReservationDTO>(query, parameters)).ToList();
         }
 
-        public bool PostReservation(EventReservationDTO eventReservation)
+        public async Task<bool> PostReservationAsync(EventReservationDTO eventReservation)
         {
             var query = "INSERT INTO eventReservation VALUES (@PersonName, @Quantity, @IdEvent)";
 
@@ -41,10 +41,10 @@ namespace APIEvent.Infra.Data.Repository
 
             var parameters = new DynamicParameters(eventReservation);
 
-            return conn.Execute(query, parameters) == 1;
+            return (await conn.ExecuteAsync(query, parameters)) == 1;
         }
 
-        public bool UpdateQuantityReservation(long idReservation, long quantity)
+        public async Task<bool> UpdateQuantityReservationAsync(long idReservation, long quantity)
         {
             var query = "UPDATE eventReservation SET Quantity = @quantity WHERE IdReservation = @idReservation";
 
@@ -54,10 +54,10 @@ namespace APIEvent.Infra.Data.Repository
             parameters.Add("@idReservation", idReservation);
             parameters.Add("@quantity", quantity);
 
-            return conn.Execute(query, parameters) == 1;
+            return (await conn.ExecuteAsync(query, parameters)) == 1;
         }
 
-        public bool DeleteReservation(long IdReservation)
+        public async Task<bool> DeleteReservationAsync(long IdReservation)
         {
             var query = "DELETE FROM eventReservation WHERE IdReservation = @id";
 
@@ -66,7 +66,7 @@ namespace APIEvent.Infra.Data.Repository
             var parameters = new DynamicParameters();
             parameters.Add("@id", IdReservation);
 
-            return conn.Execute(query, parameters) >= 1;
+            return (await conn.ExecuteAsync(query, parameters)) >= 1;
         }
     }
 }

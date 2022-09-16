@@ -16,16 +16,16 @@ namespace APIEvent.Core.Service
         {
             _configuration = configuration;
         }
-        public ActionResult<List<CityEvent>> GetEvent()
+        public async Task<ActionResult<List<CityEvent>>> GetEventAsync()
         {
             var query = "SELECT * FROM cityEvent";
 
             using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
-            return conn.Query<CityEvent>(query).ToList();
+            return (await conn.QueryAsync<CityEvent>(query)).ToList();
         }
 
-        public ActionResult<List<CityEvent>> GetEventByTitle(string title)
+        public async Task<ActionResult<List<CityEvent>>> GetEventByTitleAsync(string title)
         { 
             
             var query = "SELECT * FROM cityEvent WHERE Title LIKE @Title";
@@ -35,12 +35,10 @@ namespace APIEvent.Core.Service
             var parameters = new DynamicParameters();
             parameters.Add("@title", $"%{title}%");
 
-            return conn.Query<CityEvent>(query, parameters).ToList();
-
-
+            return (await conn.QueryAsync<CityEvent>(query, parameters)).ToList();
         }
 
-        public ActionResult<List<CityEvent>> GetEventByLocalAndDate(string local, string date)
+        public async Task<ActionResult<List<CityEvent>>> GetEventByLocalAndDateAsync(string local, string date)
         {
             var query = "SELECT * FROM cityEvent WHERE Local=@local AND DateHourEvent=@date";
 
@@ -50,10 +48,10 @@ namespace APIEvent.Core.Service
             parameters.Add("@local", local);
             parameters.Add("@date", date);
 
-            return conn.Query<CityEvent>(query, parameters).ToList();
+            return (await conn.QueryAsync<CityEvent>(query, parameters)).ToList();
         }
 
-        public ActionResult<List<CityEvent>> GetEventByDateAndRange(string date, string initialPrice, string finalPrice)
+        public async Task<ActionResult<List<CityEvent>>> GetEventByDateAndRangeAsync(string date, string initialPrice, string finalPrice)
         {
             var query = "SELECT * FROM cityEvent WHERE Price>=@initialPrice AND Price <= @finalPrice AND DateHourEvent=@date";
 
@@ -64,10 +62,10 @@ namespace APIEvent.Core.Service
             parameters.Add("@finalPrice", finalPrice);
             parameters.Add("@date", date);
 
-            return conn.Query<CityEvent>(query, parameters).ToList();
+            return (await conn.QueryAsync<CityEvent>(query, parameters)).ToList();
         }
 
-        public bool PostEvent(CityEventDTO cityEvent)
+        public async Task<bool> PostEventAsync(CityEventDTO cityEvent)
         {
             var query = "INSERT INTO cityEvent VALUES (@Title, @Description, @DateHourEvent, @Local, @Address, @Price, @Status)";
 
@@ -75,10 +73,10 @@ namespace APIEvent.Core.Service
 
             var parameters = new DynamicParameters(cityEvent);
 
-            return conn.Execute(query, parameters) == 1;
+            return (await conn.ExecuteAsync(query, parameters)) == 1;
         }
 
-        public bool UpdateEvent(long id, CityEvent cityEvent)
+        public async Task<bool> UpdateEventAsync(long id, CityEvent cityEvent)
         {
             var query = "Update cityEvent SET Title = @Title, Description = @Description," +
                 " DateHourEvent = @DateHourEvent, Local = @Local, Address = @Address, " +
@@ -89,12 +87,12 @@ namespace APIEvent.Core.Service
             var parameters = new DynamicParameters(cityEvent);
             cityEvent.IdEvent = id;
 
-            return conn.Execute(query, parameters) == 1;
+            return (await conn.ExecuteAsync(query, parameters)) == 1;
         }
-        public bool DeleteEvent(long id)
+        public async Task<bool> DeleteEventAsync(long id)
         {
             var query = "Update cityEvent SET Status = 0 WHERE IdEvent = @IdEvent";
-            if (!CheckReservation(id))
+            if (!(await CheckReservationAsync(id)))
             {
                 query = "DELETE FROM cityEvent WHERE IdEvent = @IdEvent";
             }
@@ -103,10 +101,10 @@ namespace APIEvent.Core.Service
             var parameters = new DynamicParameters();
             parameters.Add("@IdEvent", id);
 
-            return conn.Execute(query, parameters) == 1;
+            return (await conn.ExecuteAsync(query, parameters)) == 1;
         }
 
-        public bool CheckReservation(long IdEvent)
+        public async Task<bool> CheckReservationAsync(long IdEvent)
         {
             var query = "SELECT * FROM eventReservation WHERE IdEvent = @id";
 
@@ -115,7 +113,7 @@ namespace APIEvent.Core.Service
             var parameters = new DynamicParameters();
             parameters.Add("@id", IdEvent);
 
-            return conn.Execute(query, parameters) >= 1;
+            return (await conn.ExecuteAsync(query, parameters)) >= 1;
         }
     }
 }

@@ -6,21 +6,21 @@ namespace APIEvent.Core.Interfaces
 {
     public interface ICityEventRepository
     {
-        ActionResult<List<CityEvent>> GetEvent();
+        Task<ActionResult<List<CityEvent>>> GetEventAsync();
 
-        ActionResult<List<CityEvent>> GetEventByTitle(string title);
+        Task<ActionResult<List<CityEvent>>> GetEventByTitleAsync(string title);
 
-        ActionResult<List<CityEvent>> GetEventByLocalAndDate(string local, string date);
+        Task<ActionResult<List<CityEvent>>> GetEventByLocalAndDateAsync(string local, string date);
 
-        ActionResult<List<CityEvent>> GetEventByDateAndRange(string date, string initialPrice, string finalPrice);
+        Task<ActionResult<List<CityEvent>>> GetEventByDateAndRangeAsync(string date, string initialPrice, string finalPrice);
 
-        public bool PostEvent(CityEventDTO cityEvent);
+        Task<bool> PostEventAsync(CityEventDTO cityEvent);
 
-        public bool CheckReservation(long IdEvent);
+        Task<bool> CheckReservationAsync(long IdEvent);
 
-        bool UpdateEvent(long id, CityEvent cityEvent);
+        Task<bool> UpdateEventAsync(long id, CityEvent cityEvent);
 
-        bool DeleteEvent(long id);
+        Task<bool> DeleteEventAsync(long id);
 
 
 

@@ -14,24 +14,24 @@ namespace APIEvent.Core.Service
             _eventReservationRepository = eventReservationRepository;
         }
 
-        public ActionResult<List<ReservationDTO>> GetReservation(string personName, string title)
+        public async Task<ActionResult<List<ReservationDTO>>> GetReservationAsync(string personName, string title)
         {
-            return _eventReservationRepository.GetReservation(personName, title);
+            return await _eventReservationRepository.GetReservationAsync(personName, title);
         }
 
-        public bool PostReservation(EventReservationDTO eventReservation)
+        public async Task<bool> PostReservationAsync(EventReservationDTO eventReservation)
         {
-            return _eventReservationRepository.PostReservation(eventReservation);
+            return await _eventReservationRepository.PostReservationAsync(eventReservation);
         }
 
-        public bool UpdateQuantityReservation(long IdReservation, long quantity)
+        public async Task<bool> UpdateQuantityReservationAsync(long IdReservation, long quantity)
         {
-            return _eventReservationRepository.UpdateQuantityReservation(IdReservation, quantity);
+            return await _eventReservationRepository.UpdateQuantityReservationAsync(IdReservation, quantity);
         }
 
-        public bool DeleteReservation(long IdReservation)
+        public async Task<bool> DeleteReservationAsync(long IdReservation)
         {
-            return _eventReservationRepository.DeleteReservation(IdReservation);
+            return await _eventReservationRepository.DeleteReservationAsync(IdReservation);
         }
 
     }

@@ -25,18 +25,18 @@ namespace APIEvent.Controllers
         [HttpGet("/reservations/{title}/{personName}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(Roles = "admin, cliente")]
-        public ActionResult<List<ReservationDTO>>  GetReservation(string personName, string title)
+        public async Task<ActionResult<List<ReservationDTO>>> GetReservationAsync(string personName, string title)
         {
-            return _eventReservationService.GetReservation(personName, title);
+            return await _eventReservationService.GetReservationAsync(personName, title);
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Roles = "admin, cliente")]
-        public ActionResult<CityEvent> PostReservation([FromBody] EventReservationDTO eventReservation)
+        public async Task<ActionResult<CityEvent>> PostReservationAsync([FromBody] EventReservationDTO eventReservation)
         {
-            if (!_eventReservationService.PostReservation(eventReservation))
+            if (!( await _eventReservationService.PostReservationAsync(eventReservation)))
             {
                 return BadRequest();
             }
@@ -47,9 +47,9 @@ namespace APIEvent.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [Authorize(Roles = "admin")]
-        public ActionResult<CityEvent> UpdateQuantityReservation(long idReservation, long quantity)
+        public async Task<ActionResult<CityEvent>> UpdateQuantityReservationAsync(long idReservation, long quantity)
         {
-            if (!_eventReservationService.UpdateQuantityReservation(idReservation, quantity))
+            if (! (await _eventReservationService.UpdateQuantityReservationAsync(idReservation, quantity)))
             {
                 return BadRequest();
             }
@@ -60,9 +60,9 @@ namespace APIEvent.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [Authorize(Roles = "admin")]
-        public IActionResult DeleteReservation(long idReservation)
+        public async Task<IActionResult> DeleteReservationAsync(long idReservation)
         {
-            if (!_eventReservationService.DeleteReservation(idReservation))
+            if (! (await _eventReservationService.DeleteReservationAsync(idReservation)))
             {
                 return NotFound();
             }
