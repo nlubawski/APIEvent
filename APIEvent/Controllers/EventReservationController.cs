@@ -11,6 +11,7 @@ namespace APIEvent.Controllers
     [Consumes("application/json")]
     [Produces("application/json")]
     [ProducesResponseType(StatusCodes.Status503ServiceUnavailable)]
+    [ProducesResponseType(StatusCodes.Status417ExpectationFailed)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     public class EventReservationController : ControllerBase

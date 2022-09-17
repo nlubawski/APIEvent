@@ -23,6 +23,16 @@ namespace APIEvent.Filters
                     };
                     context.Result = new ObjectResult(problemSql);
                     break;
+                case NullReferenceException:
+                    context.HttpContext.Response.StatusCode = StatusCodes.Status417ExpectationFailed;
+                    var problemNull = new ProblemDetails
+                    {
+                        Status = 417,
+                        Title = "Erro inesperado no sistema",
+                        Type = context.Exception.GetType().Name
+                    };
+                    context.Result = new ObjectResult(problemNull);
+                    break;
                 default:
                     context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
                     var problemDefault = new ProblemDetails

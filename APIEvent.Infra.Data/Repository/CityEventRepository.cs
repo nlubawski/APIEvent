@@ -11,20 +11,10 @@ namespace APIEvent.Core.Service
     public class CityEventRepository : ICityEventRepository
     {
         private readonly IConfiguration _configuration;
-
         public CityEventRepository(IConfiguration configuration)
         {
             _configuration = configuration;
         }
-        public async Task<ActionResult<List<CityEvent>>> GetEventAsync()
-        {
-            var query = "SELECT * FROM cityEvent";
-
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            return (await conn.QueryAsync<CityEvent>(query)).ToList();
-        }
-
         public async Task<ActionResult<List<CityEvent>>> GetEventByTitleAsync(string title)
         { 
             
@@ -37,7 +27,6 @@ namespace APIEvent.Core.Service
 
             return (await conn.QueryAsync<CityEvent>(query, parameters)).ToList();
         }
-
         public async Task<ActionResult<List<CityEvent>>> GetEventByLocalAndDateAsync(string local, string date)
         {
             var query = "SELECT * FROM cityEvent WHERE Local=@local AND DateHourEvent=@date";
@@ -50,7 +39,6 @@ namespace APIEvent.Core.Service
 
             return (await conn.QueryAsync<CityEvent>(query, parameters)).ToList();
         }
-
         public async Task<ActionResult<List<CityEvent>>> GetEventByDateAndRangeAsync(string date, string initialPrice, string finalPrice)
         {
             var query = "SELECT * FROM cityEvent WHERE Price>=@initialPrice AND Price <= @finalPrice AND DateHourEvent=@date";
@@ -64,7 +52,6 @@ namespace APIEvent.Core.Service
 
             return (await conn.QueryAsync<CityEvent>(query, parameters)).ToList();
         }
-
         public async Task<bool> PostEventAsync(CityEventDTO cityEvent)
         {
             var query = "INSERT INTO cityEvent VALUES (@Title, @Description, @DateHourEvent, @Local, @Address, @Price, @Status)";
@@ -75,7 +62,6 @@ namespace APIEvent.Core.Service
 
             return (await conn.ExecuteAsync(query, parameters)) == 1;
         }
-
         public async Task<bool> UpdateEventAsync(long id, CityEvent cityEvent)
         {
             var query = "Update cityEvent SET Title = @Title, Description = @Description," +
@@ -103,7 +89,6 @@ namespace APIEvent.Core.Service
 
             return (await conn.ExecuteAsync(query, parameters)) == 1;
         }
-
         public async Task<bool> CheckReservationAsync(long IdEvent)
         {
             var query = "SELECT * FROM eventReservation WHERE IdEvent = @id";

@@ -4,10 +4,8 @@ namespace APIEvent.Core.Model
 {
     public class EventReservation
     {
-
         [Required(ErrorMessage = "Id do evento é obrigatório")]
         public long IdEvent { get; set; }
-
         public long IdReservation { get; set; }
 
         [Required(ErrorMessage = "Nome é obrigatório")]
